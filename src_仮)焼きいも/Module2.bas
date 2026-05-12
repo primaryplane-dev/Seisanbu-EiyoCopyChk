@@ -1,3 +1,4 @@
+Attribute VB_Name = "Module2"
 Option Explicit
 
 ' 共通定数・関数をまとめる標準モジュール
@@ -7,7 +8,6 @@ Public Const cnFile As String = "\\srv0103\ALL\SEISAN\栄養計算\新表示用　計算表\
 Public Sub subCopyClear(lRow As Long, bMode As Boolean)
     CopyOrClearRow ActiveSheet, lRow, bMode
 End Sub
-
 
 '--- コピー・クリア共通処理 ---
 Public Sub CopyOrClearRow(ws As Worksheet, lRow As Long, bMode As Boolean)
@@ -22,7 +22,6 @@ Public Sub CopyOrClearRow(ws As Worksheet, lRow As Long, bMode As Boolean)
         End If
     Next
 End Sub
-
 
 '--- コピーボタン押し忘れチェック共通処理 ---
 Public Sub CheckCopyButtonAllSheets()
@@ -58,8 +57,6 @@ Public Sub CheckCopyButtonAllSheets()
     End If
 End Sub
 
-
-
 ' vba_Form.xlsmを開いて全シートをコピーし、処理を実行して結果を返す共通関数
 Public Function OpenVbaFormAllSheets() As String
     Dim oWB As Workbook
@@ -76,3 +73,4 @@ Public Function OpenVbaFormAllSheets() As String
     
     Set oWB = Nothing
 End Function
+
