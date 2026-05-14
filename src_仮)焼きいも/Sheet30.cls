@@ -32,23 +32,13 @@ Private Sub cmdClear104_Click()
     Call subCopyClear(104, False)
 End Sub
 
-' I106とI107の値が変更されたときにI108を更新する
 Private Sub Worksheet_Change(ByVal Target As Range)
+    On Error GoTo ErrorHanlder
     If Not Intersect(Target, Range("I106,I107")) Is Nothing Then
-        Dim val As Double
-        Dim roundedVal As Double
-
-        ' 計算式
-        val = ((Range("I107").Value / Range("I106").Value) * 100 - 100) * (-1)
-
-        ' 0.25刻みで四捨五入
-        roundedVal = WorksheetFunction.Floor(val * 2, 1) / 2
-        If val - roundedVal >= 0.25 Then
-            roundedVal = roundedVal + 0.5
-        End If
-
-        Application.EnableEvents = False
-        Range("I108").Value = roundedVal
-        Application.EnableEvents = True
+        ThisWorkbook.SetI108WithRounding Me
     End If
+    Exit Sub
+ErrorHanlder:
+    Debug.Print "[" & Format(Now, "yyyy/MM/dd HH:mm:ss") & "] [Error] Sheet29.Worksheet_Change: " & Err.Number & " - " & Err.Description
+    Call MsgBox("焼減率の計算に失敗しました。システム管理者へ連絡してください｡ ", vbCritical)
 End Sub
