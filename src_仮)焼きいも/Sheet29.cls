@@ -16,22 +16,24 @@ Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean
     Me.Cells(Target.Row, Target.Column) = OpenVbaFormAllSheets()
 End Sub
 
+
 Private Sub cmdCopy87_Click()
-    Call subCopyClear(87, True)
+    Call CopyOrClearRow(Me, 87, True)
 End Sub
 
 Private Sub cmdCopy104_Click()
-    Call subCopyClear(104, True)
+    Call CopyOrClearRow(Me, 104, True)
 End Sub
 
 Private Sub cmdClear87_Click()
-    Call subCopyClear(87, False)
+    Call CopyOrClearRow(Me, 87, False)
 End Sub
 
 Private Sub cmdClear104_Click()
-    Call subCopyClear(104, False)
+    Call CopyOrClearRow(Me, 104, False)
 End Sub
 
+'焼減率の計算（I108セルに0.25刻みで四捨五入した値をセット：計算式はThisWorkbook.SetI108WithRounding）
 Private Sub Worksheet_Change(ByVal Target As Range)
     On Error GoTo ErrorHanlder
     If Not Intersect(Target, Range("I106,I107")) Is Nothing Then

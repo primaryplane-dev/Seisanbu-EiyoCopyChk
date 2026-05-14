@@ -1,9 +1,15 @@
-Attribute VB_Name = "Module2"
+
+Attribute VB_Name = "Common"
 Option Explicit
 
-' 共通定数・関数をまとめる標準モジュール
+'=============================
+' 共通定数
+'=============================
 Public Const cnFile As String = "\\srv0103\ALL\SEISAN\栄養計算\新表示用　計算表\製品登録申請用\栄養計算フォーマット用分類一覧\vba_Form.xlsm"
 
+'=============================
+' コピー・クリア共通処理
+'=============================
 '--- 既存ボタン呼び出し用のエイリアス（後方互換） ---
 Public Sub subCopyClear(lRow As Long, bMode As Boolean)
     CopyOrClearRow ActiveSheet, lRow, bMode
@@ -23,7 +29,9 @@ Public Sub CopyOrClearRow(ws As Worksheet, lRow As Long, bMode As Boolean)
     Next
 End Sub
 
-'--- コピーボタン押し忘れチェック共通処理 ---
+'=============================
+' コピーボタン押し忘れチェック共通処理
+'=============================
 Public Sub CheckCopyButtonAllSheets()
     Dim ws As Worksheet
     Dim checkRows As Variant
@@ -57,7 +65,9 @@ Public Sub CheckCopyButtonAllSheets()
     End If
 End Sub
 
-' vba_Form.xlsmを開いて全シートをコピーし、処理を実行して結果を返す共通関数
+'=============================
+' vba_Form.xlsm連携共通関数
+'=============================
 Public Function OpenVbaFormAllSheets() As String
     Dim oWB As Workbook
     Dim ws As Worksheet
@@ -73,4 +83,3 @@ Public Function OpenVbaFormAllSheets() As String
     
     Set oWB = Nothing
 End Function
-

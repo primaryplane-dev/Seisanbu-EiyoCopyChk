@@ -8,7 +8,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Option Explicit
-Private Const cnFile = "\\srv0103\ALL\SEISAN\栄養計算\新表示用　計算表\製品登録申請用\栄養計算フォーマット用分類一覧\vba_Form.xlsm"
 
 Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
     If Not Target.Row = 4 Then Exit Sub
@@ -28,28 +27,21 @@ Private Function fncOpen() As String
 End Function
 
 Private Sub cmdCopy87_Click()
-    Call subCopyClear(87, True)
+    Call CopyOrClearRow(Me, 87, True)
 End Sub
+
 Private Sub cmdCopy104_Click()
-    Call subCopyClear(104, True)
+    Call CopyOrClearRow(Me, 104, True)
 End Sub
 
 Private Sub cmdClear87_Click()
-    Call subCopyClear(87, False)
-End Sub
-Private Sub cmdClear104_Click()
-    Call subCopyClear(104, False)
+    Call CopyOrClearRow(Me, 87, False)
 End Sub
 
-Private Sub subCopyClear(ByVal lRow As Long, ByVal bMode As Boolean)
-    Dim lCol    As Long
-    For lCol = 3 To 12
-        If Not lCol = 6 Then
-            If bMode Then Me.Cells(lRow, lCol) = Me.Cells(lRow - 1, lCol)
-            If Not bMode Then Me.Cells(lRow, lCol) = ""
-        End If
-    Next
+Private Sub cmdClear104_Click()
+    Call CopyOrClearRow(Me, 104, False)
 End Sub
+
 '------------------------------------------------------
 '  ■■■■■■ 出力なし誤差シート作成    ■■■■■■
 '------------------------------------------------------
@@ -83,4 +75,16 @@ Private Sub subCopyAndEdit()
     ST.Cells(13, 46) = "±20％範囲"
     ST.Range(ST.Cells(17, 46), ST.Cells(19, 46)).Formula = "=fncHantei('" & Me.Name & "'!RC[-4],RC[-2])"
     ST.Range(ST.Cells(17, 47), ST.Cells(19, 47)).Formula = "=fncCalc('" & Me.Name & "'!RC[-5],RC[-3])"
+End Sub
+
+'焼減率の計算（I108セルに0.25刻みで四捨五入した値をセット：計算式はThisWorkbook.SetI108WithRounding）
+Private Sub Worksheet_Change(ByVal Target As Range)
+    On Error GoTo ErrorHanlder
+    If Not Intersect(Target, Range("I106,I107")) Is Nothing Then
+        ThisWorkbook.SetI108WithRounding Me
+    End If
+    Exit Sub
+ErrorHanlder:
+    Debug.Print "[" & Format(Now, "yyyy/MM/dd HH:mm:ss") & "] [Error] Sheet29.Worksheet_Change: " & Err.Number & " - " & Err.Description
+    Call MsgBox("焼減率の計算に失敗しました。システム管理者へ連絡してください｡ ", vbCritical)
 End Sub
