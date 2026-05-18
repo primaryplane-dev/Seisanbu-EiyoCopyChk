@@ -1,12 +1,3 @@
-VERSION 1.0 CLASS
-BEGIN
-  MultiUse = -1  'True
-END
-Attribute VB_Name = "ThisWorkbook"
-Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = False
-Attribute VB_PredeclaredId = True
-Attribute VB_Exposed = True
 Option Explicit
 
 ' 保存時にコピーボタン押し忘れチェックを実行
@@ -42,3 +33,4 @@ ErrorHandler:
     Debug.Print "[" & Format(Now, "yyyy/MM/dd HH:mm:ss") & "] [Error] ThisWorkbook.SetI108WithRounding: " & Err.Number & " - " & Err.Description
     Call MsgBox("焼減率の計算に失敗しました。システム管理者へ連絡してください｡ ", vbCritical)
 End Sub
+
